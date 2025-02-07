@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation EzyTap</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <style>
+        /* Reset de base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Variables de couleur inspirées de l'image */
+        :root {
+            --primary-color: #797ef6; /* Violet-bleu */
+            --secondary-color: #68b684; /* Vert clair */
+            --text-color: #fff;         /* Blanc */
+            --bg-color: #0b0d1f;       /* Fond sombre */
+            --card-bg: rgba(255, 255, 255, 0.08); /* Carte semi-transparente */
+            --border-color: rgba(255, 255, 255, 0.1); /* Bordure claire */
+            --accent-color: #42ca91; /* Vert accentué */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px; /* Ajout d'un peu de padding autour du contenu */
+            position: relative; /* Pour le bouton "Retour en haut" */
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px; /* Coins arrondis */
+            margin-bottom: 20px; /* Espacement en dessous */
+        }
+
+        header h1 {
+            margin-bottom: 0.5em;
+            font-size: 2.5em;
+            font-weight: 600; /* Plus gras */
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.8; /* Légèrement transparent */
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color); /* Ajout d'une bordure */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            opacity: 1;
+        }
+
+        /* Main */
+        main {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color); /* Bordure */
+            backdrop-filter: blur(10px);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5em;
+            margin-bottom: 1em;
+        }
+
+        ol, ul {
+            padding-left: 2em;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Promo Card */
+        .promo-card {
+            background-color: rgba(var(--accent-color-rgb), 0.1); /* Utiliser la couleur accentuée */
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .promo-card h3 {
+            color: var(--accent-color); /* Couleur accentuée */
+            margin-bottom: 0.5em;
+        }
+
+        .share-methods {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1em;
+        }
+
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .share-button:hover {
+            opacity: 1;
+        }
+
+        .telegram { background-color: #2AABEE; }
+        .facebook { background-color: #3B5998; }
+        .whatsapp { background-color: #25D366; }
+
+        /* FAQ */
+        details {
+            margin-bottom: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+            background-color: var(--card-bg); /* Ajout d'un fond */
+        }
+
+        details:hover {
+            border-color: var(--secondary-color);
+        }
+
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        details p {
+            padding: 10px;
+            color: var(--text-color);
+        }
+
+        /* Icônes */
+        .icon {
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.3em;
+            vertical-align: -0.2em;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1d3d;  /* Légèrement plus clair que le fond principal */
+            color: var(--text-color);
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+            border-radius: 8px;
+        }
+
+        /* Stats Card */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stats-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .stats-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 0.5em;
+            color: var(--text-color); /* Assure la visibilité */
+        }
+
+        .stats-card .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--accent-color); /* Accentue le nombre */
+            transition: color 0.3s ease-in-out;
+        }
+
+        .stats-card .change {
+            font-size: 0.9em;
+            color: #ccc;
+            margin-top: 0.5em;
+        }
+
+        /* Totaux Retraits */
+        .total-withdrawals {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            animation: pulseText 2s infinite alternate;
+        }
+
+        /* Bouton Retour en Haut */
+        #backToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        #backToTopBtn:hover {
+            opacity: 1;
+        }
+
+        /* Notifications */
+        #notificationContainer {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 100;
+            display: none; /* Masqué par défaut */
+            animation: slideIn 0.5s ease-out, slideOut 0.5s 4.5s ease-in forwards;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseText {
+            from { color: #ccc; }
+            to { color: var(--accent-color); }
+        }
+
+        @keyframes slideIn {
+            from { top: -50px; opacity: 0; }
+            to { top: 20px; opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { top: 20px; opacity: 1; }
+            to { top: -50px; opacity: 0; }
+        }
+
+         /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            nav li {
+                margin: 0;
+            }
+
+            nav a {
+                padding: 10px;
+                text-align: center;
+            }
+
+            .share-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .share-button {
+                margin: 5px 0;
+                width: 100%;
+            }
+
+             .stats-container {
+                grid-template-columns: 1fr;  /* Empile les cartes sur les petits écrans */
+             }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>EzyTap - Documentation</h1>
+            <p>Tout ce que vous devez savoir pour gagner avec EzyTap.</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+             <ul>
+                <li><a href="#statistiques"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Statistiques</a></li>
+                <li><a href="#introduction"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Introduction</a></li>
+                <li><a href="#comment-jouer"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg> Comment Jouer</a></li>
+                <li><a href="#publicite"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7l-1.41-1.41L15 10.17V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-3.17l4.59 4.59L21 17v-10z"/></svg> Publicité & Gains</a></li>
+                <li><a href="#classement"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7l-1.41-1.41L15 10.17V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-3.17l4.59 4.59L21 17v-10z"/></svg> Classement et Récompenses</a></li>
+                <li><a href="#conseils"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c-5.33 0-8 4.67-8 9.33 0 2.67 1.33 5.33 4 7.33.67.33 1.33.67 2-1h4c.67-.33 1.33-.67 2-1 2.67-2 4-4.67 4-7.33C20 6.67 17.33 2 12 2zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Conseils</a></li>
+                <li><a href="#faq"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section id="statistiques">
+                <h2>Statistiques en Temps Réel</h2>
+                <p class="total-withdrawals">Total Retraits : <span id="totalWithdrawals">$465,778</span></p>
+                <div class="stats-container">
+                    <div class="stats-card">
+                        <h3>Nombre Total d'Utilisateurs</h3>
+                        <div class="number" id="totalUsers">13667</div>
+                        <div class="change"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> 1% depuis le mois dernier</div>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Pièces Déjà Collectées</h3>
+                        <div class="number" id="totalCoins">46576767</div>
+                        <div class="change"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Montant Total</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p>EzyTap, c'est votre jeu de tapping directement accessible via Telegram ! Accumulez des pièces et convertissez-les en argent réel avec nos options de paiement diversifiées.</p>
+            </section>
+
+            <section id="comment-jouer">
+                <h2>Comment Jouer</h2>
+                <ol>
+                    <li>Lancez EzyTap depuis votre compte Telegram.</li>
+                    <li>Tapez sur l'écran pour gagner des pièces à chaque interaction.</li>
+                    <li>Explorez la section "Publicité & Gains" pour des stratégies de croissance de vos revenus.</li>
+                </ol>
+            </section>
+
+            <section id="publicite">
+                <h2>📢 Publicité & Gains</h2>
+                <p>Boostez vos gains en partageant votre expérience EzyTap ! Voici quelques pistes pour vous aider :</p>
+
+                <div class="promo-card">
+                    <h3>Le partage, c'est la clé !</h3>
+                    <p>Faites découvrir EzyTap à vos amis Telegram et profitez de bonus exclusifs.</p>
+
+                    <div class="share-methods">
+                        <a href="#" class="share-button telegram">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.73 7.91l-8.23 3.16c-.25.1-.49.2-.73.31-.24-.11-.48-.21-.73-.31l-8.23-3.16c-.83-.32-1.41-.08-1.41.93v8.23c0 1.01.59 1.26 1.41.93l8.23-3.16c.25-.1.49-.2.73-.31.24.11.48.21.73.31l8.23 3.16c.83.32 1.41.08 1.41-.93V8.84c0-1.01-.58-1.25-1.41-.93z"/></svg> Telegram
+                        </a>
+                        <a href="#" class="share-button facebook">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm3 11h-2.5V16h-2V13H8.5v-2.5H10V8h3v2.5H15V13z"/></svg> Facebook
+                        </a>
+                        <a href="#" class="share-button whatsapp">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.58 7.4L8.07 18.9a1.24 1.24 0 0 1-1.74 0l-.5-.5a1.24 1.24 0 0 1 0-1.74l11.51-11.5a2.7 2.7 0 0 1 3.82 3.82z"/></svg> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+             <section id="classement">
+                <h2>Classement et Récompenses de la Saison</h2>
+                <p>Grimpez dans le classement pour gagner des prix exceptionnels à la fin de la saison !</p>
+
+                <h3>Top Leaders Actuels</h3>
+                <ul>
+                    <li>🥇 Player1 - 1,250,000 points</li>
+                    <li>🥈 Player2 - 1,100,000 points</li>
+                    <li>🥉 Player3 - 980,000 points</li>
+                    <li>4. Player4 - 850,000 points</li>
+                    <li>5. Player5 - 720,000 points</li>
+                    <!-- Ajoutez d'autres leaders si nécessaire -->
+                </ul>
+
+                <h3>Récompenses de Fin de Saison</h3>
+                <ul>
+                    <li><strong>Rang 1:</strong> 1000 USD en pièces EzyTap</li>
+                    <li><strong>Rang 2:</strong> 500 USD en pièces EzyTap</li>
+                    <li><strong>Rang 3:</strong> 250 USD en pièces EzyTap</li>
+                    <li><strong>Rangs 4-10:</strong> 100 USD en pièces EzyTap</li>
+                    <li><strong>Rangs 11-50:</strong> 50 USD en pièces EzyTap</li>
+                    <!-- Ajoutez d'autres rangs et récompenses si nécessaire -->
+                </ul>
+            </section>
+
+            <section id="conseils">
+                <h2>Conseils d'Expert</h2>
+                <ul>
+                    <li>Revenez chaque jour pour collecter vos récompenses et pièces bonus.</li>
+                    <li>Diffusez votre lien de parrainage sur les plateformes sociales.</li>
+                    <li>Ne manquez pas nos jeux concours pour remporter des prix attractifs.</li>
+                    <li>Suivez notre blog pour des conseils inédits.</li>
+                </ul>
+            </section>
+
+            <section id="faq">
+                <h2>FAQ</h2>
+                <details>
+                    <summary>Comment retirer mes gains ?</summary>
+                    <p>Nous mettons à votre disposition de nombreuses options : virement bancaire, PayPal, Binance, Mobile Money, Trust Wallet, et bien d'autres !</p>
+                </details>
+                <details>
+                    <summary>Quel est le délai de réception de mon paiement ?</summary>
+                    <p>Les paiements sont traités sous 24 à 72 heures, jours ouvrés.</p>
+                </details>
+                <details>
+                    <summary>Que faire en cas de problème avec l'application ?</summary>
+                    <p>Contactez notre service client via l'application ou par email à support@EzyTap.com. Nous sommes là pour vous !</p>
+                </details>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 EzyTap. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <button id="backToTopBtn">Retour en haut</button>
+
+    <div id="notificationContainer"></div>
+
+    <script>
+        // Bouton "Retour en haut"
+        let backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        };
+
+        backToTopBtn.addEventListener("click", function() {
+            document.body.scrollTop = 0; // Safari
+            document.documentElement.scrollTop = 0; // Autres navigateurs
+        });
+
+        // Initialisation du nombre total d'utilisateurs
+        let totalUsers = 13667;
+
+        // Mise à jour des statistiques (simulation)
+        function updateStats() {
+            totalUsers += Math.floor(Math.random() * 10) + 1; // Augmente le nombre d'utilisateurs de 1 à 10
+            document.getElementById("totalUsers").textContent = totalUsers.toLocaleString();
+            document.getElementById("totalCoins").textContent = (Math.floor(Math.random() * (50000000 - 45000000 + 1)) + 45000000).toLocaleString();
+            document.getElementById("totalWithdrawals").textContent = "$" + (Math.floor(Math.random() * (500000 - 450000 + 1)) + 450000).toLocaleString();
+        }
+
+        // Mise à jour toutes les 30 minutes (en millisecondes)
+        setInterval(updateStats, 30 * 60 * 1000);
+
+        // Lancer la première mise à jour
+        updateStats();
+
+        // Affichage des notifications
+        function showNotification() {
+            const users = [63636626, 74839201, 85739102, 96820193, 12738192];
+            const user = users[Math.floor(Math.random() * users.length)];
+            const coins = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000; // Montant aléatoire entre 1000 et 5000
+
+            const notificationText = `User: ${user} vient de retirer ${coins.toLocaleString()} pièces bonus de parrainage`;
+
+            const notificationContainer = document.getElementById("notificationContainer");
+            notificationContainer.textContent = notificationText;
+            notificationContainer.style.display = "block";
+
+            // Lancer l'animation de disparition après 5 secondes (définie dans le CSS)
+            setTimeout(() => {
+                notificationContainer.style.display = "none"; // S'assure que la notification disparait si l'animation échoue
+            }, 5000);
+        }
+
+        // Afficher une notification aléatoirement toutes les 15 à 30 secondes
+        setInterval(showNotification, (Math.floor(Math.random() * (30 - 15 + 1)) + 15) * 1000); // Entre 15 et 30 secondes
+    </script>
+</body>
+</html>
